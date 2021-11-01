@@ -10,14 +10,16 @@ class MealItem extends StatelessWidget {
   final int duration;
   final Complexity complexity;
   final Affordability affordability;
+  final Function removeItem;
 
   const MealItem(
       {required this.affordability,
       required this.complexity,
       required this.title,
-        required this.id,
+      required this.id,
       required this.duration,
       required this.imageUrl,
+        required this.removeItem,
       Key? key})
       : super(key: key);
 
@@ -25,10 +27,10 @@ class MealItem extends StatelessWidget {
     switch (complexity) {
       case Complexity.Simple:
         return 'Simple';
-     //   break;
+      //   break;
       case Complexity.Challenging:
         return 'Challenging';
-     //   break;
+      //   break;
       case Complexity.Hard:
         return 'Hard';
       //  break;
@@ -41,10 +43,10 @@ class MealItem extends StatelessWidget {
     switch (affordability) {
       case Affordability.Affordable:
         return 'Affordable';
-    //    break;
+      //    break;
       case Affordability.Luxurious:
         return 'Luxurious';
-    //    break;
+      //    break;
       case Affordability.Pricey:
         return 'Pricey';
       //  break;
@@ -55,7 +57,13 @@ class MealItem extends StatelessWidget {
 
   void selectMeal(BuildContext context) {
     Navigator.of(context).pushNamed(
-      MealDetailScreen.routeName, arguments: id,
+      MealDetailScreen.routeName,
+      arguments: id,
+    ).then((result) {
+      if(result != null) {
+        removeItem(result);
+      }
+    }
     );
   }
 
@@ -133,7 +141,7 @@ class MealItem extends StatelessWidget {
                       const SizedBox(
                         width: 6,
                       ),
-                      Text(complexityText)
+                      Text(affordabilityText)
                     ],
                   ),
                 ],
